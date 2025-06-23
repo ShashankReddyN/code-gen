@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Code Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Code Generator</h1>
+    <textarea id="promptInput" placeholder="Enter your prompt..."></textarea>
+    <button onclick="generateCode()">Generate Code</button>
+    <div class="output-wrapper">
+      <pre id="outputArea"></pre>
+      <button id="copyButton" onclick="copyToClipboard()">📋 Copy</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
