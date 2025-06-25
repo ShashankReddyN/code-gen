@@ -7,7 +7,7 @@ const previousPrompt = document.getElementById("previousPrompt");
 generateBtn.addEventListener("click", async () => {
   const prompt = promptInput.value.trim();
   if (!prompt) {
-    output.textContent = "❌ Please enter a prompt.";
+    output.textContent = "Please enter a prompt.";
     return;
   }
 
@@ -24,9 +24,9 @@ generateBtn.addEventListener("click", async () => {
     });
 
     const data = await res.json();
-    output.textContent = data.code || "❌ No code generated.";
+    output.textContent = data.code || " No code generated.";
   } catch (error) {
-    output.textContent = "❌ Failed to fetch response.";
+    output.textContent = "Failed to fetch response.";
     console.error("Client fetch error:", error);
   }
 });
