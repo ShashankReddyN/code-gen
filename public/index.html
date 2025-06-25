@@ -7,13 +7,22 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Code Generator</h1>
-    <textarea id="promptInput" placeholder="Enter your prompt..."></textarea>
-    <button onclick="generateCode()">Generate Code</button>
-    <div class="output-wrapper">
-      <pre id="outputArea"></pre>
-      <button id="copyButton" onclick="copyToClipboard()">📋 Copy</button>
+  <div class="app-container">
+    <div class="header">
+      <h1>CodeGen</h1>
+    </div>
+    <div class="history" id="history">
+      <h2>Previous Prompt</h2>
+      <p id="previousPrompt">None</p>
+    </div>
+    <div class="main">
+      <textarea id="promptInput" rows="4" placeholder="Enter your prompt..."></textarea>
+      <button id="generateBtn">Generate Code</button>
+      <div class="result">
+        <h2>Generated Code</h2>
+        <button id="copyBtn">Copy</button>
+        <pre id="output"></pre>
+      </div>
     </div>
   </div>
 

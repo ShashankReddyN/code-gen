@@ -1,54 +1,41 @@
-async function generateCode() {
-  const prompt = document.getElementById("promptInput").value;
-  const output = document.getElementById("outputArea");
-  const copyBtn = document.getElementById("copyButton");
+const generateBtn = document.getElementById("generateBtn");
+const promptInput = document.getElementById("promptInput");
+const output = document.getElementById("output");
+const copyBtn = document.getElementById("copyBtn");
+const previousPrompt = document.getElementById("previousPrompt");
 
-  output.innerText = "";
-  output.classList.add("typing");
-  copyBtn.style.display = "none";
+generateBtn.addEventListener("click", async () => {
+  const prompt = promptInput.value.trim();
+  if (!prompt) {
+    output.textContent = "❌ Please enter a prompt.";
+    return;
+  }
+
+  previousPrompt.textContent = prompt;
+  output.textContent = "⏳ Generating...";
 
   try {
-    const response = await fetch("/generate", {
+    const res = await fetch("/generate", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt }),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ prompt })
     });
 
-    const data = await response.json();
-    const code = data.code || "❌ No code generated.";
-    
-    typeText(code, output, () => {
-      output.classList.remove("typing");
-      copyBtn.style.display = "block";
-    });
-  } catch (err) {
-    output.innerText = "❌ Error contacting the server.";
-    output.classList.remove("typing");
+    const data = await res.json();
+    output.textContent = data.code || "❌ No code generated.";
+  } catch (error) {
+    output.textContent = "❌ Failed to fetch response.";
+    console.error("Client fetch error:", error);
   }
-}
+});
 
-function typeText(text, element, callback) {
-  let i = 0;
-  const speed = 20;
-
-  function type() {
-    if (i < text.length) {
-      element.innerText += text.charAt(i);
-      i++;
-      setTimeout(type, speed);
-    } else {
-      callback();
-    }
+copyBtn.addEventListener("click", () => {
+  const code = output.textContent.trim();
+  if (code) {
+    navigator.clipboard.writeText(code)
+      .then(() => console.log("Copied to clipboard"))
+      .catch(err => console.error("Clipboard copy failed", err));
   }
-
-  type();
-}
-
-function copyToClipboard() {
-  const text = document.getElementById("outputArea").innerText;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.getElementById("copyButton");
-    btn.innerText = "✅ Copied!";
-    setTimeout(() => (btn.innerText = "📋 Copy"), 1500);
-  });
-}
+});
