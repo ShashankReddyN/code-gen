@@ -12,7 +12,7 @@ generateBtn.addEventListener("click", async () => {
   }
 
   previousPrompt.textContent = prompt;
-  output.textContent = "⏳ Generating...";
+  output.textContent = " Generating...";
 
   try {
     const res = await fetch("/generate", {
